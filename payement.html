@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout Page</title>
+    <link rel="icon" href="Polish_20210808_210132987.jpg" type="image/jpeg">
+    <style>
+        :root {
+            --primary-color: #FF6B35;
+            --secondary-color: #4CAF50;
+            --accent-color: #3CAEA3;
+            --background-color: #F6F7F8;
+            --text-color: #2C3E50;
+            --border-color: #E0E6ED;
+            --hover-color: #FF8C00;
+            --card-bg-color: #FFFFFF;
+            --button-text-color: #FFFFFF;
+            --cart-bg-color: #E8EEF2;
+        }
+
+        body {
+            font-family: 'Roboto', 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: var(--background-color);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+
+        .cart-container {
+            padding: 20px;
+            background-color: var(--cart-bg-color);
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+
+        .cart-summary {
+            background-color: var(--card-bg-color);
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .cart-total {
+            font-size: 1.4em;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: var(--text-color);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--primary-color);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .checkout-btn:hover {
+            background-color: var(--hover-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .payment-methods {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .payment-option {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .payment-option input {
+            margin-right: 10px;
+        }
+
+        .bill-section {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--card-bg-color);
+            border-radius: 15px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .bill-details {
+            margin-bottom: 20px;
+        }
+
+        .print-btn {
+            width: 100%;
+            padding: 15px;
+            background-color: var(--secondary-color);
+            color: var(--button-text-color);
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 1.1em;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .print-btn:hover {
+            background-color: #45a049;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="cart-container">
+        <h2>Your Order</h2>
+        <div class="cart-total">
+            
+        </div>
+
+        <div class="cart-summary">
+            <div class="cart-total">Total: රු 0.00</div>
+            
+            
+            <div class="payment-methods">
+                <h3>Select Payment Method</h3>
+                <div class="payment-option">
+                    <input type="radio" id="cash" name="payment" value="Cash" checked>
+                    <label for="cash">Cash</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="card" name="payment" value="Card">
+                    <label for="card">Credit/Debit Card</label>
+                </div>
+                <div class="payment-option">
+                    <input type="radio" id="online" name="payment" value="Online">
+                    <label for="online">Online Payment</label>
+                </div>
+            </div>
+            
+            <button class="checkout-btn" onclick="generateBill()">Proceed to Checkout</button>
+        </div>
+        
+        
+        <div class="bill-section" style="display: none;">
+            <h2>Bill</h2>
+            <div class="bill-details">
+               
+            </div>
+            <button class="print-btn" onclick="window.print()">Print Bill</button>
+        </div>
+    </div>
+
+    <script>
+        
+        const cart = [
+            { name: "Burger", quantity: 2, price: 350, discount: 10 },
+            { name: "Fries", quantity: 1, price: 150, discount: 0 },
+            { name: "Coke", quantity: 1, price: 120, discount: 5 }
+        ];
+
+        function generateBill() {
+            const billSection = document.querySelector('.bill-section');
+            const billDetails = document.querySelector('.bill-details');
+            const cartItems = document.querySelector('.cart-items');
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+            
+            let billContent = '<h3>Items Purchased</h3>';
+            
+            cart.forEach(item => {
+                billContent += `
+                    <div>
+                        ${item.name} x ${item.quantity} - රු ${(item.price * (1 - item.discount / 100) * item.quantity).toFixed(2)}
+                    </div>
+                `;
+            });
+
+            const totalAmount = cart.reduce((total, item) => total + item.price * (1 - item.discount / 100) * item.quantity, 0);
+
+            billContent += `
+                <hr>
+                <div><strong>Total: රු ${totalAmount.toFixed(2)}</strong></div>
+                <div><strong>Payment Method: ${paymentMethod}</strong></div>
+            `;
+
+            billDetails.innerHTML = billContent;
+            billSection.style.display = 'block';
+            cartItems.style.display = 'none';
+        }
+    </script>
+</body>
+</html>

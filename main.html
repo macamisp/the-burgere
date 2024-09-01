@@ -1,0 +1,722 @@
+<html>
+    <head>
+        <base href="https://www.බර්ගර් .com/">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>බර්ගර්</title>
+<link rel="icon" href="Polish_20210808_210132987.jpg" type="image/jpeg">
+
+
+<style>
+    :root {
+        --primary-color: #FF6B35;
+        --secondary-color: #4CAF50;
+        --accent-color: #3CAEA3;
+        --background-color: #F6F7F8;
+        --text-color: #2C3E50;
+        --border-color: #E0E6ED;
+        --hover-color: #FF8C00;
+        --card-bg-color: #FFFFFF;
+        --button-text-color: #FFFFFF;
+        --cart-bg-color: #E8EEF2;
+    }
+
+    body {
+        font-family: 'Roboto', 'Arial', sans-serif;
+        margin: 0;
+        padding: 0;
+        background-color: var(--background-color);
+        color: var(--text-color);
+        transition: all 0.3s ease;
+    }
+
+    body.dark-theme {
+        --primary-color: #FF8C00;
+        --secondary-color: #66BB6A;
+        --accent-color: #4DB6AC;
+        --background-color: #121212;
+        --text-color: #E0E0E0;
+        --border-color: #333333;
+        --hover-color: #FFA726;
+        --card-bg-color: #1E1E1E;
+        --button-text-color: #FFFFFF;
+        --cart-bg-color: #212121;
+    }
+
+    .container {
+        display: flex;
+        height: 100vh;
+    }
+
+    .menu-container {
+        flex: 2;
+        overflow-y: auto;
+        padding: 20px;
+        background-color: var(--card-bg-color);
+        border-right: 1px solid var(--border-color);
+        box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+    }
+
+    .cart-container {
+        flex: 1;
+        padding: 20px;
+        background-color: var(--cart-bg-color);
+        display: flex;
+        flex-direction: column;
+    }
+
+    .category-tabs {
+        display: flex;
+        justify-content: space-around;
+        margin-bottom: 20px;
+        background-color: var(--background-color);
+        padding: 10px;
+        border-radius: 10px;
+    }
+
+    .category-tab {
+        padding: 10px 20px;
+        background-color: var(--primary-color);
+        color: var(--button-text-color);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .category-tab:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .search-bar {
+        width: 100%;
+        padding: 15px;
+        margin-bottom: 20px;
+        border: 2px solid var(--border-color);
+        border-radius: 25px;
+        font-size: 16px;
+        transition: all 0.3s ease;
+        background-color: var(--card-bg-color);
+        color: var(--text-color);
+    }
+
+    .search-bar:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px rgba(60, 174, 163, 0.2);
+    }
+
+    .menu-items {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 25px;
+    }
+
+    .menu-item {
+        background-color: var(--card-bg-color);
+        border: 1px solid var(--border-color);
+        border-radius: 15px;
+        padding: 15px;
+        text-align: center;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .menu-item:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 15px rgba(0,0,0,0.1);
+    }
+
+    .menu-item img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        border-radius: 10px;
+        margin-bottom: 15px;
+    }
+
+    .item-name {
+        font-weight: bold;
+        margin-bottom: 10px;
+        color: var(--text-color);
+        font-size: 18px;
+    }
+
+    .item-price {
+        color: var(--primary-color);
+        font-weight: bold;
+        margin-bottom: 10px;
+        font-size: 20px;
+    }
+
+    .item-discount {
+        color: var(--secondary-color);
+        font-size: 0.9em;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .add-to-cart {
+        background-color: var(--secondary-color);
+        color: var(--button-text-color);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .add-to-cart:hover {
+        background-color: #45a049;
+        transform: scale(1.05);
+    }
+
+    .cart-items {
+        flex-grow: 1;
+        overflow-y: auto;
+        margin-bottom: 20px;
+    }
+
+    .cart-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 15px;
+        border-bottom: 1px solid var(--border-color);
+        background-color: var(--card-bg-color);
+        margin-bottom: 10px;
+        border-radius: 10px;
+        transition: all 0.3s ease;
+    }
+
+    .cart-item:hover {
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .cart-item-details {
+        flex-grow: 1;
+    }
+
+    .cart-item-name {
+        font-weight: bold;
+        color: var(--text-color);
+    }
+
+    .cart-item-price {
+        color: var(--primary-color);
+        font-weight: bold;
+    }
+
+    .cart-item-quantity {
+        display: flex;
+        align-items: center;
+    }
+
+    .quantity-btn {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+        border: none;
+        padding: 5px 10px;
+        cursor: pointer;
+        font-size: 1.2em;
+        border-radius: 5px;
+        transition: all 0.3s ease;
+    }
+
+    .quantity-btn:hover {
+        background-color: #35998E;
+    }
+
+    .cart-summary {
+        background-color: var(--card-bg-color);
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .cart-total {
+        font-size: 1.4em;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--text-color);
+    }
+
+    .checkout-btn {
+        width: 100%;
+        padding: 15px;
+        background-color: var(--primary-color);
+        color: var(--button-text-color);
+        border: none;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .checkout-btn:hover {
+        background-color: var(--hover-color);
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .add-item-section, .add-customer-section, .show-customers-section {
+        background-color: var(--card-bg-color);
+        padding: 20px;
+        border-radius: 15px;
+        margin-top: 20px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .add-item-form, .add-customer-form {
+        display: grid;
+        gap: 15px;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .form-group label {
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+
+    .form-group input, .form-group select {
+        padding: 10px;
+        border: 1px solid var(--border-color);
+        border-radius: 5px;
+        font-size: 16px;
+        background-color: var(--card-bg-color);
+        color: var(--text-color);
+    }
+
+    .add-item-btn, .add-customer-btn, .show-customers-btn {
+        background-color: var(--accent-color);
+        color: var(--button-text-color);
+        border: none;
+        padding: 10px 20px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-size: 1.1em;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .add-item-btn:hover, .add-customer-btn:hover, .show-customers-btn:hover {
+        background-color: #35998E;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    }
+
+    .customer-list {
+        margin-top: 20px;
+        max-height: 300px;
+        overflow-y: auto;
+    }
+
+    .customer-item {
+        background-color: var(--background-color);
+        padding: 15px;
+        margin-bottom: 10px;
+        border-radius: 10px;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .customer-item h4 {
+        margin: 0 0 10px 0;
+        color: var(--primary-color);
+    }
+
+    .customer-item p {
+        margin: 5px 0;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(20px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    .fade-in {
+        animation: fadeIn 0.5s ease-out;
+    }
+
+    .theme-toggle {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        font-size: 24px;
+        color: var(--text-color);
+        transition: all 0.3s ease;
+    }
+
+    .theme-toggle:hover {
+        transform: scale(1.1);
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="menu-container">
+        <div class="category-tabs">
+            <button class="category-tab">Burgers</button>
+            <button class="category-tab">Submarines</button>
+            <button class="category-tab">Fries</button>
+            <button class="category-tab">Pasta</button>
+            <button class="category-tab">Beverages</button>
+            <button class="category-tab" onclick="window.location.href='file:///D:/vs%20code/burger%20shop%20website/the%20burger.html';">Logout</button>
+                
+                   
+                
+           
+        </div>
+        <input type="text" class="search-bar" placeholder="Search items...">
+        <div class="menu-items">
+            
+        </div>
+        <div class="add-item-section">
+            <h3>Add New Item</h3>
+            <form class="add-item-form">
+                <div class="form-group">
+                    <label for="itemId">Item ID</label>
+                    <input type="text" id="itemId" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemName">Item Name</label>
+                    <input type="text" id="itemName" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemCategory">Category</label>
+                    <select id="itemCategory" required>
+                        <option value="Burgers">Burgers</option>
+                        <option value="Submarines">Submarines</option>
+                        <option value="Fries">Fries</option>
+                        <option value="Pasta">Pasta</option>
+                        <option value="Beverages">Beverages</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="itemPrice">Price</label>
+                    <input type="number" id="itemPrice" step="0.01" min="0" required>
+                </div>
+                <div class="form-group">
+                    <label for="itemDiscount">Discount (%)</label>
+                    <input type="number" id="itemDiscount" min="0" max="100" value="0">
+                </div>
+                <button type="submit" class="add-item-btn">Add Item</button>
+            </form>
+        </div>
+        <div class="add-customer-section">
+            <h3>Add New Customer</h3>
+            <form class="add-customer-form">
+                <div class="form-group">
+                    <label for="customerName">Customer Name</label>
+                    <input type="text" id="customerName" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerEmail">Email</label>
+                    <input type="email" id="customerEmail" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerPhone">Phone</label>
+                    <input type="tel" id="customerPhone" required>
+                </div>
+                <div class="form-group">
+                    <label for="customerAddress">Address</label>
+                    <input type="text" id="customerAddress" required>
+                </div>
+                <button type="submit" class="add-customer-btn">Add Customer</button>
+            </form>
+        </div>
+        <div class="show-customers-section">
+            <h3>Customer List</h3>
+            <button class="show-customers-btn">Show Customers</button>
+            <div class="customer-list" style="display: none;">
+               
+            </div>
+        </div>
+    </div>
+    <div class="cart-container">
+        <h2>Your Order</h2>
+        <div class="cart-items">
+           
+        </div>
+        <div class="cart-summary">
+            <div class="cart-total">Total: රු 0.00</div>
+            <button class="checkout-btn"onclick="window.location.href='file:///D:/vs%20code/burger%20shop%20website/payement.html';">Proceed to Checkout</button>
+        </div>
+    </div>
+</div>
+
+<button class="theme-toggle" id="themeToggle">🌞</button>
+
+
+<script>
+   
+    let menuItems = [ 
+        // B serious is burger
+        { id: 'B1001', name: 'Classic Burger', category: 'Burgers', price: 750, discount: 0 },
+        { id: 'B1002', name: 'Classic Burger Regular', category: 'Burgers', price: 1500, discount: 15 },
+        { id: 'B1003', name: 'Turkey Burger' , category: 'Burgers' , price: 1600, discount:0 },
+        { id: 'B1004', name: 'Chiken Burger Large' , category: 'Burgers' , price: 1400, discount:0 },
+        { id: 'B1005', name: 'Chicken Burger Regular' , category: 'Burgers' , price: 800, discount:20 },
+        { id: 'B1006', name: 'Cheese Burger Large' , category: 'Burgers' , price: 1000, discount:0 },
+        { id: 'B1007', name: 'Cheese Burger Regular' , category: 'Burgers' , price: 600, discount:0 },
+        { id: 'B1008', name: 'Bacon Burge' , category: 'Burgers' , price: 650, discount:15 },
+        { id: 'B1009', name: 'Shawarma Burge' , category: 'Burgers' , price: 800, discount:0 },
+        { id: 'B1010', name: 'Olive Burger' , category: 'Burgers' , price: 1800, discount:0 },
+        { id: 'B1012', name: ' Double-Cheese Burger' , category: 'Burgers' , price: 1250, discount:20 },
+        { id: 'B1013', name: ' Crispy Chicken Burger Regular' , category: 'Burgers' , price: 1200, discount:0 },
+        { id: 'B1014 ', name: 'Crispy Chicken Burger Large' , category: 'Burgers' , price: 1600, discount:10 },
+        { id: 'B1014 ', name: 'Paneer Burge' , category: 'Burgers' , price: 900, discount:0 },
+        //S serious is submarines
+        { id: 'S2001 ', name: 'Crispy Chicken Submarine Large' , category: 'Submarines' , price: 2000, discount:0 },
+        { id: 'S2002 ', name: ' Crispy Chicken Submarine Regular' , category: 'Submarines' , price: 1500, discount:0 },
+        { id: 'S2003 ', name: ' Chicken Submarine Large ' , category: 'Submarines' , price: 1800, discount:3 },
+        { id: 'S2005 ', name: 'Chicken Submarine Regular' , category: 'Submarines' , price: 1400, discount:0 },
+        { id: 'S2006 ', name: 'Grinder Submarine' , category: 'Submarines' , price: 2300, discount:0 },
+        { id: 'S2007 ', name: ' Cheese Submarine' , category: 'Submarines' , price: 2200, discount:0 },
+        { id: 'S2008 ', name: 'Double Cheese n Chicken Submarine' , category: 'Submarines' , price: 1900, discount:16 },
+        { id: 'S2009 ', name: 'Special Horgie Submarine' , category: 'Submarines' , price: 2800, discount:0 },
+        { id: 'S2010', name: 'MOS Special Submarine', category: 'Submarines', price: 3000, discount: 0 },
+        //F serious is Fries
+        { id: 'F3001', name: 'Steak Fries Large', category: 'Fries', price: 1200, discount: 0 },
+        { id: 'F3002', name: 'Steak Fries Medium', category: 'Fries', price: 600, discount: 0 },
+        { id: 'F3003', name: 'French Fries Large', category: 'Fries', price: 800, discount: 0 },
+        { id: 'F3004', name: 'French Fries Medium', category: 'Fries', price: 650, discount: 0 },
+        { id: 'F3005', name: 'French Fries Small ', category: 'Fries', price: 450, discount: 0 },
+        { id: 'F3006', name: ' Sweet Potato Fries Large', category: 'Fries', price: 600, discount: 0 },
+        //p serious is Pasta
+        { id: 'P4001', name: 'Chicken n Cheese Pasta', category: 'Pasta', price: 1600, discount: 15 },
+        { id: 'P4002', name: ' Chicken Penne Pasta', category: 'Pasta', price: 1700, discount: 0 },
+        { id: 'P4003', name: 'Ground Turkey Pasta Bak', category: 'Pasta', price: 2900, discount: 10 },
+        { id: 'P4004', name: 'Creamy Shrimp Pasta', category: 'Pasta', price: 2000, discount: 0 },
+        { id: 'P4005', name: 'Lemon Butter Pasta', category: 'Pasta', price: 1950, discount: 0 },
+        { id: 'P4006', name: 'Tagliatelle Pasta ', category: 'Pasta', price: 2400, discount: 1 },
+        { id: 'P4007', name: 'Baked Ravioli', category: 'Pasta', price: 2000, discount: 1 },
+        // D B serious is Bwverages
+        { id: 'D5001', name: ' Pepsi (330ml) ', category: 'Beverages', price: 990, discount: 5 },
+        { id: 'D5002', name: 'Coca-Cola (330ml', category: 'Beverages', price: 1230, discount: 0 },
+        { id: 'D5003', name: ' Sprite (330ml)', category: 'Beverages', price: 1500, discount: 3 },
+        { id: 'D5004', name: ' Mirinda (330ml)', category: 'Beverages', price: 850, discount: 7 },
+
+    ];
+
+    const cart = [];
+    let customers = [];
+
+    function renderMenuItems(category = null) {
+        const menuContainer = document.querySelector('.menu-items');
+        menuContainer.innerHTML = '';
+
+        const filteredItems = category ? menuItems.filter(item => item.category === category) : menuItems;
+
+        filteredItems.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('menu-item', 'fade-in');
+            itemElement.innerHTML = `
+                <img src="/images/$-'
+                {item.id}.jpg" alt="${item.name}" width="200" height="180">
+                <div class="item-name">${item.name}</div>
+                <div class="item-price">රු${item.price.toFixed(2)}</div>
+                ${item.discount > 0 ? `<div class="item-discount">${item.discount}% off</div>` : ''}
+                <button class="add-to-cart" data-id="${item.id}">Add to Cart</button>
+            `;
+            menuContainer.appendChild(itemElement);
+        });
+
+        
+        document.querySelectorAll('.add-to-cart').forEach(button => {
+            button.addEventListener('click', (e) => addToCart(e.target.dataset.id));
+        });
+    }
+
+    function addToCart(itemId) {
+        const item = menuItems.find(item => item.id === itemId);
+        const existingItem = cart.find(cartItem => cartItem.id === itemId);
+
+        if (existingItem) {
+            existingItem.quantity += 1;
+        } else {
+            cart.push({ ...item, quantity: 1 });
+        }
+
+        renderCart();
+    }
+
+    function renderCart() {
+        const cartContainer = document.querySelector('.cart-items');
+        cartContainer.innerHTML = '';
+
+        cart.forEach(item => {
+            const itemElement = document.createElement('div');
+            itemElement.classList.add('cart-item', 'fade-in');
+            itemElement.innerHTML = `
+                <div class="cart-item-details">
+                    <div class="cart-item-name">${item.name}</div>
+                    <div class="cart-item-price">රු${(item.price * (1 - item.discount / 100) * item.quantity).toFixed(2)}</div>
+                </div>
+                <div class="cart-item-quantity">
+                    <button class="quantity-btn minus" data-id="${item.id}">-</button>
+                    <span>${item.quantity}</span>
+                    <button class="quantity-btn plus" data-id="${item.id}">+</button>
+                </div>
+            `;
+            cartContainer.appendChild(itemElement);
+        });
+
+        updateCartTotal();
+
+        
+        document.querySelectorAll('.quantity-btn').forEach(button => {
+            button.addEventListener('click', (e) => updateQuantity(e.target.dataset.id, e.target.classList.contains('plus') ? 1 : -1));
+        });
+    }
+
+    function updateQuantity(itemId, change) {
+        const item = cart.find(item => item.id === itemId);
+        item.quantity += change;
+
+        if (item.quantity <= 0) {
+            const index = cart.findIndex(cartItem => cartItem.id === itemId);
+            cart.splice(index, 1);
+        }
+
+        renderCart();
+    }
+
+    function updateCartTotal() {
+        const total = cart.reduce((sum, item) => sum + item.price * (1 - item.discount / 100) * item.quantity, 0);
+        document.querySelector('.cart-total').textContent = `Total: රු ${total.toFixed(2)}`;
+    }
+
+    function addNewItem(event) {
+        event.preventDefault();
+
+        const newItem = {
+            id: document.getElementById('itemId').value,
+            name: document.getElementById('itemName').value,
+            category: document.getElementById('itemCategory').value,
+            price: parseFloat(document.getElementById('itemPrice').value),
+            discount: parseInt(document.getElementById('itemDiscount').value)
+        };
+
+        menuItems.push(newItem);
+        renderMenuItems();
+
+      
+        event.target.reset();
+    }
+
+    function addNewCustomer(event) {
+        event.preventDefault();
+
+        const newCustomer = {
+            name: document.getElementById('customerName').value,
+            email: document.getElementById('customerEmail').value,
+            phone: document.getElementById('customerPhone').value,
+            address: document.getElementById('customerAddress').value
+        };
+
+        customers.push(newCustomer);
+        console.log('New customer added:', newCustomer);
+        alert('Customer added successfully!');
+
+       
+        event.target.reset();
+    }
+
+    function showCustomers() {
+        const customerList = document.querySelector('.customer-list');
+        customerList.innerHTML = '';
+
+        if (customers.length === 0) {
+            customerList.innerHTML = '<p>No customers found.</p>';
+        } else {
+            customers.forEach(customer => {
+                const customerElement = document.createElement('div');
+                customerElement.classList.add('customer-item', 'fade-in');
+                customerElement.innerHTML = `
+                    <h4>${customer.name}</h4>
+                    <p>Email: ${customer.email}</p>
+                    <p>Phone: ${customer.phone}</p>
+                    <p>Address: ${customer.address}</p>
+                `;
+                customerList.appendChild(customerElement);
+            });
+        }
+
+        customerList.style.display = 'block';
+    }
+
+    function toggleTheme() {
+        const body = document.body;
+        const themeToggle = document.getElementById('themeToggle');
+        
+        body.classList.toggle('dark-theme');
+        
+        if (body.classList.contains('dark-theme')) {
+            themeToggle.textContent = '🌙';
+        } else {
+            themeToggle.textContent = '🌞';
+        }
+    }
+
+    
+    document.addEventListener('DOMContentLoaded', () => {
+        renderMenuItems();
+
+    
+        document.querySelectorAll('.category-tab').forEach(tab => {
+            tab.addEventListener('click', (e) => renderMenuItems(e.target.textContent));
+        });
+
+      
+        document.querySelector('.search-bar').addEventListener('input', (e) => {
+            const searchTerm = e.target.value.toLowerCase();
+            const filteredItems = menuItems.filter(item => 
+                item.name.toLowerCase().includes(searchTerm) || 
+                item.id.toLowerCase().includes(searchTerm)
+            );
+            renderMenuItems(null, filteredItems);
+        });
+
+      
+        document.querySelector('.checkout-btn').addEventListener('click', () => {
+           
+            alert('Proceeding to checkout...');
+        });
+
+       
+        document.querySelector('.add-item-form').addEventListener('submit', addNewItem);
+
+        
+        document.querySelector('.add-customer-form').addEventListener('submit', addNewCustomer);
+
+        
+        document.querySelector('.show-customers-btn').addEventListener('click', showCustomers);
+
+       
+        document.getElementById('themeToggle').addEventListener('click', toggleTheme);
+    });
+
+    
+</script>
+</body>
+</html>
